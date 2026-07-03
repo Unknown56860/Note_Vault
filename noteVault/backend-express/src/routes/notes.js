@@ -29,12 +29,12 @@ notesRouter.get("/:id", AuthHandler, async (req, res) => {
     const userId = req.userId;
     const noteId = req.params.id;
 
-    const notes = await notesService.getNote(userId, noteId);
+    const note = await notesService.getNote(userId, noteId);
 
-    if(!notes) {
+    if(!note) {
         return res.status(404).json({success: false, message: "Note not found"});
     }
-    return res.status(200).json({success: true, notes: notes});
+    return res.status(200).json({success: true, note: note});
 });
 
 notesRouter.put("/:id", AuthHandler, async (req, res) => {

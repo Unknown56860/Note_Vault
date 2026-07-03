@@ -13,7 +13,9 @@ function Note() {
     const [loading, setLoading] = useState(!isNew);
     const [editing, setEditing] = useState(isNew);
     
-    const [note, setNote] = useState(null);
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [updateDate, setUpdateDate] = useState("");
 
     const navigate = useNavigate();
     
@@ -38,12 +40,12 @@ function Note() {
                 return;
             }
 
-            const data = res.data.notes;
+            const data = res.data.note;
 
-            setNote({
-                title: data.title,
-                content: data.content,
-            });
+            setTitle(data.title);
+            setContent(data.content);
+            setUpdateDate(data.updatedAt);
+
         } catch {
             showToast("Failed to load note.", false);
             navigate("/notes");
@@ -52,23 +54,18 @@ function Note() {
         setLoading(false);
     };
 
-    const handleChange = (e) => {
-        setNote((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value,
-        }));
-    };
-
     const handleSave = async (e) => {
         e.preventDefault();
 
         try {
             let res;
 
+            const newNoteData = { title: title, content: content };
+
             if (isNew) {
-                res = await newNote(note);
+                res = await newNote(newNoteData);
             } else {
-                res = await updateNote(id, note);
+                res = await updateNote(id, newNoteData);
             }
 
             if (res.data.message) {
@@ -137,7 +134,7 @@ function Note() {
                                     </h2>
                                     {!isNew && !editing && (
                                         <small className="text-secondary">
-                                            Last updated: {new Date(note.updatedAt).toLocaleString()}
+                                            Last updated: {new Date(updateDate).toLocaleString()}
                                         </small>
                                     )}
                                 </div>
@@ -154,8 +151,8 @@ function Note() {
                                             name="title"
                                             className="form-control"
                                             placeholder="Enter a title..."
-                                            value={note.title}
-                                            onChange={handleChange}
+                                            value={title}
+                                            onChange={(e) => setTitle(e.target.value)}
                                         />
                                     </div>
 
@@ -166,8 +163,8 @@ function Note() {
                                             rows={15}
                                             className="form-control"
                                             placeholder="Write your thoughts..."
-                                            value={note.content}
-                                            onChange={handleChange}
+                                            value={content}
+                                            onChange={(e) => setContent(e.target.value)}
                                         />
                                     </div>
 
