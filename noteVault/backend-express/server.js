@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import mongoConnect from "./src/database/mongo/Mongo.js";
+import mongoConnect from "./src/database/mongo/mongo.js";
 
 import authRouter from "./src/routes/auth.js";
 import notesRouter from "./src/routes/notes.js";
