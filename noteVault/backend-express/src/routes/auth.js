@@ -40,7 +40,7 @@ authRouter.post('/login', async (req, res) => {
     }
 
     res.cookie('token', token, {
-        httpOnly: true, secure: true, sameSite: 'none', maxAge: 7 * 24 * 60 * 60 * 1000
+        httpOnly: true, secure: true, sameSite: 'none', partitioned:true, maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     return res.status(200).json({success: true, message: "Login successful"});
@@ -48,7 +48,7 @@ authRouter.post('/login', async (req, res) => {
 
 authRouter.get('/logout', async (req, res) => {
     res.cookie('token', "", {
-        httpOnly: true, secure: true, sameSite: 'none', maxAge: 100
+        httpOnly: true, secure: true, sameSite: 'none', partitioned:true, maxAge: 100
     })
 
     return res.status(200).json({success: true, message: "Logout successful"});
