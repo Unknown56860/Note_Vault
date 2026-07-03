@@ -192,7 +192,7 @@ function Note() {
                             ) : (
 
                                 <>
-                                    <h3>{note.title || "Untitled"}</h3>
+                                    <h3>{title || "Untitled"}</h3>
 
                                     <hr />
 
@@ -200,7 +200,7 @@ function Note() {
                                         className="mb-4"
                                         style={{ whiteSpace: "pre-wrap", minHeight: 250 }}
                                     >
-                                        {note.content || (
+                                        {content || (
                                             <span className="text-secondary">
                                                 This note has no content.
                                             </span>
