@@ -40,7 +40,7 @@ authRouter.post('/login', async (req, res) => {
     }
 
     res.cookie('token', token, {
-        httpOnly: true, secure: true, sameSite: 'lax', maxAge: 7 * 24 * 60 * 60 * 1000
+        httpOnly: true, secure: true, sameSite: 'none', maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     return res.status(200).json({success: true, message: "Login successful"});
@@ -48,7 +48,7 @@ authRouter.post('/login', async (req, res) => {
 
 authRouter.get('/logout', async (req, res) => {
     res.cookie('token', "", {
-        httpOnly: true, secure: true, sameSite: 'lax', maxAge: 100
+        httpOnly: true, secure: true, sameSite: 'none', maxAge: 100
     })
 
     return res.status(200).json({success: true, message: "Logout successful"});
@@ -87,7 +87,7 @@ authRouter.delete('/delete-profile', AuthHandler, async (req, res) => {
         return res.status(500).json({success: false, message: "Profile deletion failed"});
     }
 
-    res.clearCookie('token', { httpOnly: true, secure: true, sameSite: 'lax', path: '/' });
+    res.clearCookie('token', { httpOnly: true, secure: true, sameSite: 'none', path: '/' });
     if(!deletedNotes) {
         return res.status(202).json({success: true, message: "Profile will be deleted shortly"});
     }
